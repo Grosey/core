@@ -3,6 +3,7 @@
 namespace App\Models\Smartcars;
 
 use App\Models\Concerns\Awardable;
+use App\Libraries\Storage\FteStorageWrapper;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -128,8 +129,8 @@ class Flight extends Model
         return $query->where('featured', true);
     }
 
-    public function getImageAttribute()
+    public function getImageAttribute($value)
     {
-        return FlightImage::find($this->id);
+        return (new FteStorageWrapper())->retrieve($value);
     }
 }
